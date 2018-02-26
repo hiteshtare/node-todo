@@ -1,0 +1,32 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<div style="text-align:center">
+  <h1>
+    Welcome to {{title}}!!
+  </h1>
+</div>
+
+<!-- <ul class="list">
+  <li class="item" routerLinkActive="active">
+    <a routerLink="/trayview" class="bs-icon-text">
+      <span class="text">List</span>
+    </a>
+  </li>
+</ul> -->
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <button mat-button routerLink="/add">
+      <mat-icon>add</mat-icon>
+      <span>Add</span>
+    </button>
+    <button mat-button routerLink="/list">
+      <mat-icon>list</mat-icon>
+      <span>List</span>
+    </button>
+    <button mat-button routerLink="/edit/5a940cc70122813e4458e15b">
+      <mat-icon>edit</mat-icon>
+      <span>Edit</span>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<router-outlet></router-outlet>

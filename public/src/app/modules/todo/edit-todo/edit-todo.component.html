@@ -1,0 +1,21 @@
+<div class="example-container">
+  <form [formGroup]="editTodoForm">
+    <div>
+      <span>Name :</span>
+      <input [(ngModel)]="existingTodo.username" type="text" name="name" [formControl]="editTodoForm.controls['name']">
+    </div>
+    <br>
+    <div>
+      <span>IsDone :</span>
+      <input type="radio" name="gender" value='true' [formControl]="editTodoForm.controls['isDone']">Yes
+      <input type="radio" name='gender' value='false' [formControl]="editTodoForm.controls['isDone']">No
+    </div>
+    <br>
+    <pre>{{existingTodo | json}}</pre>
+    <div>
+      <button type="button" (click)="onUpdate(editTodoForm.value)">Update</button>
+      &nbsp;
+      <button type="button" (click)="onDelete(editTodoForm.value)">Delete</button>
+    </div>
+  </form>
+</div>

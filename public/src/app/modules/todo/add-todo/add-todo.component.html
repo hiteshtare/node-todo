@@ -1,0 +1,19 @@
+<div class="example-container">
+  <form [formGroup]="addTodoForm">
+    <div>
+      <span>Name :</span>
+      <input type="text" name="name" [formControl]="addTodoForm.controls['name']">
+    </div>
+    <br>
+    <div>
+      <span>IsDone :</span>
+      <input type="radio" name="gender" value='true' [formControl]="addTodoForm.controls['isDone']">Yes
+      <input type="radio" name='gender' value='false' [formControl]="addTodoForm.controls['isDone']">No
+    </div>
+    <br>
+    <pre>{{addTodoForm.value | json}}</pre>
+    <div>
+      <button type="button" (click)="onAdd(addTodoForm.value)" [disabled]="!addTodoForm.valid">Save</button>
+    </div>
+  </form>
+</div>
