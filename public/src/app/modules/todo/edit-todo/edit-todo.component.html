@@ -1,21 +1,47 @@
-<div class="example-container">
-  <form [formGroup]="editTodoForm">
-    <div>
-      <span>Name :</span>
-      <input [(ngModel)]="existingTodo.username" type="text" name="name" [formControl]="editTodoForm.controls['name']">
-    </div>
-    <br>
-    <div>
-      <span>IsDone :</span>
-      <input type="radio" name="gender" value='true' [formControl]="editTodoForm.controls['isDone']">Yes
-      <input type="radio" name='gender' value='false' [formControl]="editTodoForm.controls['isDone']">No
-    </div>
-    <br>
-    <pre>{{existingTodo | json}}</pre>
-    <div>
-      <button type="button" (click)="onUpdate(editTodoForm.value)">Update</button>
-      &nbsp;
-      <button type="button" (click)="onDelete(editTodoForm.value)">Delete</button>
-    </div>
-  </form>
-</div>
+<mat-grid-list cols="4" rowHeight="700px">
+  <mat-grid-tile [colspan]="1">
+    &nbsp;
+  </mat-grid-tile>
+
+  <mat-grid-tile [colspan]="2">
+    <mat-card>
+      <mat-toolbar>Edit an existing Todo</mat-toolbar>
+      <div class="example-container">
+        <form class="example-container" [formGroup]="editTodoForm">
+          <div>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Name" [(ngModel)]="existingTodo.name" type="text" name="name" [formControl]="editTodoForm.controls['name']">
+              <mat-error *ngIf="editTodoForm.controls['name'].invalid">You must enter a value</mat-error>
+            </mat-form-field>
+          </div>
+          <br>
+          <div>
+            <label>Complete: </label>
+            <mat-radio-group class="example-radio-group" [(ngModel)]="existingTodo.isDone" [formControl]="editTodoForm.controls['isDone']">
+              <mat-radio-button class="example-radio-button" [value]="true">
+                Yes
+              </mat-radio-button>
+              <mat-radio-button class="example-radio-button" [value]="false">
+                No
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <br>
+          <div class="form-buttons">
+            <mat-grid-list cols="4">
+              <mat-grid-tile [colspan]="2">
+                <button color="accent" mat-raised-button type="button" [disabled]="!editTodoForm.valid" (click)="onUpdate(editTodoForm.value)">Update</button>
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="2">
+                <button color="warn" type="button" mat-raised-button (click)="onRemove(editTodoForm.value)">Remove</button>
+              </mat-grid-tile>
+            </mat-grid-list>
+          </div>
+        </form>
+      </div>
+    </mat-card>
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="1">
+    &nbsp;
+  </mat-grid-tile>
+</mat-grid-list>

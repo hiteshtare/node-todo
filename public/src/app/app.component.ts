@@ -8,7 +8,7 @@ import { Todo } from './shared/models/todo.model';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'NodoTodo - MEAN App';
+  title = 'Todo - MEAN App';
   todos: Todo[];
 
   constructor(private todoService: TodoService) {
@@ -21,7 +21,6 @@ export class AppComponent {
   getTodos() {
     this.todoService.getTodos().then((todos) => {
       this.todos = todos;
-      console.log(this.todos);
     });
   }
 

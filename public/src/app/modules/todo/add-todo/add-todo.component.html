@@ -1,19 +1,47 @@
-<div class="example-container">
-  <form [formGroup]="addTodoForm">
-    <div>
-      <span>Name :</span>
-      <input type="text" name="name" [formControl]="addTodoForm.controls['name']">
-    </div>
-    <br>
-    <div>
-      <span>IsDone :</span>
-      <input type="radio" name="gender" value='true' [formControl]="addTodoForm.controls['isDone']">Yes
-      <input type="radio" name='gender' value='false' [formControl]="addTodoForm.controls['isDone']">No
-    </div>
-    <br>
-    <pre>{{addTodoForm.value | json}}</pre>
-    <div>
-      <button type="button" (click)="onAdd(addTodoForm.value)" [disabled]="!addTodoForm.valid">Save</button>
-    </div>
-  </form>
-</div>
+<mat-grid-list cols="4" rowHeight="700px">
+  <mat-grid-tile [colspan]="1">
+    &nbsp;
+  </mat-grid-tile>
+
+  <mat-grid-tile [colspan]="2">
+    <mat-card>
+      <mat-toolbar>Add a new Todo</mat-toolbar>
+      <div class="example-container">
+        <form class="example-container" [formGroup]="addTodoForm">
+          <div>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Name" [formControl]="addTodoForm.controls['name']" type="text" name="name">
+              <mat-error *ngIf="addTodoForm.controls['name'].invalid">You must enter a value</mat-error>
+            </mat-form-field>
+          </div>
+          <br>
+          <div>
+            <label>Complete: </label>
+            <mat-radio-group class="example-radio-group" [formControl]="addTodoForm.controls['isDone']">
+              <mat-radio-button class="example-radio-button" [value]="true">
+                Yes
+              </mat-radio-button>
+              <mat-radio-button class="example-radio-button" [value]="false">
+                No
+              </mat-radio-button>
+            </mat-radio-group>
+          </div>
+          <br>
+          <div class="form-buttons">
+            <mat-grid-list cols="4">
+              <mat-grid-tile [colspan]="2">
+                <button color="accent" type="button" mat-raised-button (click)="onAdd(addTodoForm.value)" [disabled]="!addTodoForm.valid">Add</button>
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="2">
+                <button type="button" mat-raised-button (click)="onClear()">Clear</button>
+              </mat-grid-tile>
+            </mat-grid-list>
+          </div>
+        </form>
+      </div>
+    </mat-card>
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="1">
+    &nbsp;
+  </mat-grid-tile>
+</mat-grid-list>

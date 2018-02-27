@@ -1,5 +1,5 @@
 export class Todo {
-    id: string;
+    _id: string;
     username: string;
     name: string;
     isDone: boolean;

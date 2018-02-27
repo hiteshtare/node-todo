@@ -1,28 +1,29 @@
+import { CustomToastService } from './../../../shared/services/custom-toast.service';
 import { Todo } from './../../../shared/models/todo.model';
 import { TodoService } from './../../../shared/services/todo.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-todo',
   templateUrl: './edit-todo.component.html',
-  styleUrls: ['./edit-todo.component.css']
+  styleUrls: ['./edit-todo.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class EditTodoComponent implements OnInit {
 
   editTodoForm: FormGroup;
   existingTodo: Todo = new Todo();
 
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private todoService: TodoService) {
+  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private todoService: TodoService,
+    public customToastService: CustomToastService) {
     this.createForm();
   }
 
   ngOnInit() {
     this.route.params.map(params => params['id']).subscribe((inbuiltId) => {
-
       if (inbuiltId) {
-        console.log(inbuiltId);
         this.todoService.getTodoByInbuiltId(inbuiltId).then((todo: Todo) => {
           if (todo)
             this.existingTodo = todo;
@@ -33,7 +34,6 @@ export class EditTodoComponent implements OnInit {
       else {
         alert("Empty id!");
       }
-
     });
   }
 
@@ -42,26 +42,21 @@ export class EditTodoComponent implements OnInit {
   }
 
   onUpdate(formValue) {
-    let todo: Todo = new Todo();
-    todo.id = "5a940cc70122813e4458e15b";
-    todo.name = "Yogesh";
-    todo.isDone = !!formValue.isDone;
-    todo.hasAttachment = false;
 
-    this.todoService.addOrUpdateTodo(todo).then((result) => {
+    this.todoService.addOrUpdateTodo(this.existingTodo).then((result) => {
       if (result._body === "Updated") {
+        this.customToastService.toastMessage("Todo updated in the list.", "");
         this.router.navigate(['/list']);
       }
     });
   }
 
+  onRemove(formValue) {
+    let inbuiltId = this.existingTodo._id;
 
-  onDelete(formValue) {
-    let inbuiltId = "5a940cc70122813e4458e15b";
-
-    console.log(inbuiltId);
     this.todoService.removeTodo(inbuiltId).then((result) => {
       if (result._body === "Deleted") {
+        this.customToastService.toastMessage("Todo removed!", "");
         this.router.navigate(['/list']);
       }
     });

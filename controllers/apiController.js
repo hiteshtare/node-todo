@@ -60,11 +60,11 @@ module.exports = function (app) {
         });
     });
 
-    //Create or Update a todo with id (in-built) passed as param
+    //Create or Update a todo with id (in-built) passed from body
     app.post('/api/todo', function (req, resp) {
 
-        if (req.body.id) {
-            Todos.findByIdAndUpdate(req.body.id, {
+        if (req.body._id) {
+            Todos.findByIdAndUpdate(req.body._id, {
                 name: req.body.name,
                 isDone: req.body.isDone,
                 hasAttachment: req.body.hasAttachment,
