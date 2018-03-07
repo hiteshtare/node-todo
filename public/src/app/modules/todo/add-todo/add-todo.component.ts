@@ -3,6 +3,7 @@ import { TodoService } from './../../../shared/services/todo.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CustomToastService } from '../../../shared/services/custom-toast.service';
+import { FileUploader } from 'ng2-file-upload';
 
 @Component({
   selector: 'app-add-todo',
@@ -11,6 +12,8 @@ import { CustomToastService } from '../../../shared/services/custom-toast.servic
   encapsulation: ViewEncapsulation.None
 })
 export class AddTodoComponent {
+
+  public uploader: FileUploader = new FileUploader({ url: 'http://localhost:5000/api/upload' });
 
   addTodoForm: FormGroup;
   newTodo: Todo;

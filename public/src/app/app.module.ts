@@ -25,13 +25,17 @@ import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatPaginatorModule } from '@angular/material';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+
+import { FileSelectDirective } from 'ng2-file-upload';
 
 @NgModule({
   declarations: [
     AppComponent,
     AddTodoComponent,
     ListTodoComponent,
-    EditTodoComponent
+    EditTodoComponent,
+    FileSelectDirective
   ],
   imports: [
     routing,
@@ -50,7 +54,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatCardModule,
     MatGridListModule,
     MatPaginatorModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatProgressBarModule
   ],
   providers: [appRoutingProviders, TodoService, CustomToastService, { provide: ErrorHandler, useClass: CustomErrorHandlerService }],
   bootstrap: [AppComponent]
