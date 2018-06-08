@@ -57,7 +57,7 @@ module.exports = function (app) {
             }
             res.json({
                 error_code: 0,
-                err_desc: null
+                err_desc: req.file
             });
         });
     });
@@ -70,6 +70,9 @@ module.exports = function (app) {
                 throw err;
 
             resp.send(todos);
+        }).sort({
+            updated_at: -1,
+            created_at: -1
         });
     });
 
@@ -84,6 +87,7 @@ module.exports = function (app) {
 
             resp.send(todo);
         });
+
     });
 
 
@@ -108,6 +112,7 @@ module.exports = function (app) {
                 name: req.body.name,
                 isDone: req.body.isDone,
                 hasAttachment: req.body.hasAttachment,
+                updated_at: Date.now()
             }, function (err) {
                 if (err) throw err;
 
@@ -120,6 +125,7 @@ module.exports = function (app) {
                 name: req.body.name,
                 isDone: req.body.isDone,
                 hasAttachment: req.body.hasAttachment,
+                created_at: Date.now()
             });
 
             newTodo.save(function (err) {

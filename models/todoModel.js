@@ -7,6 +7,12 @@ var todoSchema = new Schema({
     name: String,
     isDone: Boolean,
     hasAttachment: Boolean,
+    created_at: {
+        type: Date
+    },
+    updated_at: {
+        type: Date
+    }
 });
 
 var todos = mongoose.model('Todos', todoSchema);

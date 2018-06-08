@@ -1,4 +1,4 @@
-<mat-grid-list cols="4" rowHeight="1000px">
+<mat-grid-list cols="5" rowHeight="1000px">
   <mat-grid-tile [colspan]="1">
     &nbsp;
   </mat-grid-tile>
@@ -6,7 +6,7 @@
   <mat-grid-tile [colspan]="2">
     <mat-card>
       <mat-toolbar>List of Todos</mat-toolbar>
-      <div class="example-container mat-elevation-z8">
+      <div *ngIf="todos" class="example-container mat-elevation-z8">
         <div class="example-header">
           <mat-form-field>
             <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
@@ -43,6 +43,9 @@
 
         <mat-paginator #paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 15]" [showFirstLastButtons]="true">
         </mat-paginator>
+      </div>
+      <div *ngIf="!todos" class="example-container mat-elevation-z8">
+        <h5>No records found</h5>
       </div>
     </mat-card>
   </mat-grid-tile>

@@ -28,6 +28,8 @@ export class AddTodoComponent {
   }
 
   onAdd(todo: Todo) {
+    console.log(this.uploader);
+
     this.todoService.addOrUpdateTodo(todo).then((result) => {
       if (result._body === "Added") {
         this.customToastService.toastMessage("Todo added to the list.", "");

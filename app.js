@@ -15,11 +15,15 @@ app.use('/assets', express.static(`${__dirname}/public`));
 
 app.set('view-engine', 'ejs');
 
-mongoose.connect(config.getDbConnStr());
+mongoose.connect(config.getDbConnStr()).then(() => {
+  console.log(`Connected to ${config.getDbConnStr()}`);
+}).catch((e) => {
+  throw e;
+});
 
 setupController(app);
 apiController(app);
 
 app.listen(port, () => {
-  console.log("Server is up...");
+  console.log(`Server is listening on port: ${port}`);
 });
