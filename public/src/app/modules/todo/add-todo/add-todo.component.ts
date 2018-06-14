@@ -3,7 +3,7 @@ import { TodoService } from './../../../shared/services/todo.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CustomToastService } from '../../../shared/services/custom-toast.service';
-import { FileUploader, FileItem } from 'ng2-file-upload';
+import { FileUploader, FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
 
 @Component({
   selector: 'app-add-todo',
@@ -11,36 +11,57 @@ import { FileUploader, FileItem } from 'ng2-file-upload';
   styleUrls: ['./add-todo.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class AddTodoComponent {
+export class AddTodoComponent implements OnInit {
 
   addTodoForm: FormGroup;
   newTodo: Todo;
+  public uploader: FileUploader
+  uploadedResp = [];
 
   constructor(private formBuilder: FormBuilder, private todoService: TodoService,
     public customToastService: CustomToastService) {
     this.createForm();
   }
 
-  public uploader: FileUploader = new FileUploader({ url: this.todoService.todosUploadUrl });
+  ngOnInit() {
+    this.uploader = new FileUploader({ url: this.todoService.todosUploadUrl });
+    this.uploader.onErrorItem = (item, response, status, headers) => this.onErrorItem(item, response, status, headers);
+    this.uploader.onSuccessItem = (item, response, status, headers) => this.onSuccessItem(item, response, status, headers);
+  }
+
+  onSuccessItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
+    let data = JSON.parse(response); //success server response
+    this.uploadedResp.push(data);
+  }
+
+  onErrorItem(item: FileItem, response: string, status: number, headers: ParsedResponseHeaders): any {
+    let error = JSON.parse(response); //error server response
+  }
 
   createForm() {
     this.addTodoForm = this.formBuilder.group({ 'name': ['', Validators.compose([Validators.required])], 'isDone': ['', Validators.compose([Validators.required])] });
   }
 
   onAdd(todo: Todo) {
-    todo.hasAttachment = false;
+    if (this.uploadedResp.length > 0) {
+      todo.hasAttachment = true;
 
-    let fileQueue: FileItem[] = this.uploader.queue;
-    fileQueue.forEach(fileItem => {
-      if (fileItem.isUploaded) {
-        todo.hasAttachment = true;
+      this.uploadedResp.forEach(resp => {
+        if (resp.success) {
+          let payload = resp.payload;
 
-        if (!todo.files)
-          todo.files = [{ name: fileItem.file.name, fileType: fileItem.file.type, size: fileItem.file.size }];
-        else
-          todo.files.push({ name: fileItem.file.name, fileType: fileItem.file.type, size: fileItem.file.size });
-      }
-    });
+          todo.hasAttachment = true;
+
+          if (!todo.files)
+            todo.files = [{ name: payload.originalname, savedName: payload.filename, fileType: payload.mimetype, size: payload.size }];
+          else
+            todo.files.push({ name: payload.originalname, savedName: payload.filename, fileType: payload.mimetype, size: payload.size });
+        }
+      });
+    }
+    else {
+      todo.hasAttachment = false;
+    }
 
     this.todoService.addOrUpdateTodo(todo).then((result) => {
       if (result._body === "Added") {
@@ -56,5 +77,6 @@ export class AddTodoComponent {
 
   clearFields() {
     this.addTodoForm.reset();
+    this.uploadedResp = [];
   }
 }

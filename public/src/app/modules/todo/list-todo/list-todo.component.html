@@ -21,7 +21,17 @@
           <!-- Position Column -->
           <ng-container matColumnDef="avatar">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Avatar </mat-header-cell>
-            <mat-cell *matCellDef="let element"> {{element.files.length}} </mat-cell>
+            <mat-cell *matCellDef="let element">
+              <ng-container *ngIf="element.files.length">
+                <img mat-card-image src="http://localhost:5000/api/todos/upload/{{element.files[0].savedName}}" [alt]="element.files[0].savedName">
+              </ng-container>
+              <ng-container *ngIf="!element.files.length">
+                No avatar uploaded
+              </ng-container>
+
+            </mat-cell>
+
+
           </ng-container>
 
           <ng-container matColumnDef="name">
@@ -29,7 +39,12 @@
             <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
           </ng-container>
 
-          <!-- Name Column -->
+          <!-- Has Attachment Column -->
+          <ng-container matColumnDef="hasAttachment">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Has Attachment </mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.hasAttachment == true ? "Yes" : "No"}} </mat-cell>
+          </ng-container>
+
           <ng-container matColumnDef="IsDone">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Complete </mat-header-cell>
             <mat-cell *matCellDef="let element"> {{element.isDone == true ? "Yes" : "No"}} </mat-cell>

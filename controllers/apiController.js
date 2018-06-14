@@ -1,6 +1,8 @@
 var Todos = require('../models/todoModel');
 var bodyParser = require('body-parser');
 var multer = require('multer');
+var path = require('path');
+var appDir = path.dirname(require.main.filename); //get absolute path
 
 module.exports = function (app) {
 
@@ -50,16 +52,24 @@ module.exports = function (app) {
             console.log(req.file);
             if (err) {
                 res.json({
-                    error_code: 1,
-                    err_desc: err
+                    success: false,
+                    status: 0,
+                    payload: err
                 });
                 return;
             }
-            res.json({
-                error_code: 0,
-                err_desc: req.file
+            //resp.send(todos);
+            res.send({
+                success: true,
+                status: 0,
+                payload: req.file
             });
         });
+    });
+
+    /** API path that will fetch the files using name*/
+    app.get('/api/todos/upload/:name', (req, res) => {
+        res.sendFile(`${appDir}/uploads/${req.params.name}`);
     });
 
     //Fetch all todos configured in DB
@@ -68,10 +78,6 @@ module.exports = function (app) {
         Todos.find({}, function (err, todos) {
             if (err)
                 throw err;
-
-            // todos.forEach((index, value) => {
-
-            // });
 
             resp.send(todos);
         }).sort({
@@ -115,7 +121,7 @@ module.exports = function (app) {
                 isDone: req.body.isDone,
                 hasAttachment: req.body.hasAttachment,
                 created_at: Date.now(),
-                files: req.body.files
+                files: req.body.files // storing attachments
             });
 
             newTodo.save(function (err) {

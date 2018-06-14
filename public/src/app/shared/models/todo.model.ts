@@ -6,6 +6,7 @@ export class Todo {
     hasAttachment: boolean;
     files: [{
         name: string,
+        savedName: string,
         fileType: string,
         size: number
     }]

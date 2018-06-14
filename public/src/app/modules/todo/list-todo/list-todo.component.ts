@@ -13,7 +13,7 @@ import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
 export class ListTodoComponent implements OnInit {
 
   todos;
-  displayedColumns = ['avatar', 'name', 'IsDone', "actions"];
+  displayedColumns = ['avatar', 'name', 'hasAttachment', 'IsDone', "actions"];
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -27,12 +27,6 @@ export class ListTodoComponent implements OnInit {
 
   getTodos() {
     this.todoService.getTodos().then((todos: Todo[]) => {
-
-      // this.todos = todos.forEach(todo => {
-      //   if (todo.files.length) {
-      //   }
-      // });
-
 
       this.todos = new MatTableDataSource(todos);
       this.todos.sort = this.sort;

@@ -15,6 +15,7 @@ var todoSchema = new Schema({
     },
     files: [{
         name: String,
+        savedName: String,
         fileType: String,
         size: Number
     }]
