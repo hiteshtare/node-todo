@@ -45,7 +45,7 @@ module.exports = function (app) {
     });
 
     /** API path that will upload the files */
-    app.post('/api/upload', function (req, res) {
+    app.post('/api/todos/upload', function (req, res) {
         upload(req, res, function (err) {
             console.log(req.file);
             if (err) {
@@ -63,11 +63,15 @@ module.exports = function (app) {
     });
 
     //Fetch all todos configured in DB
-    app.get('/api/todo/test', function (req, resp) {
+    app.get('/api/todos/', function (req, resp) {
 
         Todos.find({}, function (err, todos) {
             if (err)
                 throw err;
+
+            // todos.forEach((index, value) => {
+
+            // });
 
             resp.send(todos);
         }).sort({
@@ -76,23 +80,8 @@ module.exports = function (app) {
         });
     });
 
-    //Fetch all todos configured with username passed as param
-    app.get('/api/todo/username/:uname', function (req, resp) {
-
-        Todos.find({
-            username: req.params.uname
-        }, function (err, todo) {
-            if (err)
-                throw err;
-
-            resp.send(todo);
-        });
-
-    });
-
-
     //Fetch a todo with id(in-built) passed as param
-    app.get('/api/todo/id/:id', function (req, resp) {
+    app.get('/api/todos/id/:id', function (req, resp) {
 
         Todos.findById({
             _id: req.params.id
@@ -105,7 +94,7 @@ module.exports = function (app) {
     });
 
     //Create or Update a todo with id (in-built) passed from body
-    app.post('/api/todo', function (req, resp) {
+    app.post('/api/todos', function (req, resp) {
 
         if (req.body._id) {
             Todos.findByIdAndUpdate(req.body._id, {
@@ -125,19 +114,23 @@ module.exports = function (app) {
                 name: req.body.name,
                 isDone: req.body.isDone,
                 hasAttachment: req.body.hasAttachment,
-                created_at: Date.now()
+                created_at: Date.now(),
+                files: req.body.files
             });
 
             newTodo.save(function (err) {
-                if (err) throw err;
-
-                resp.send('Added');
+                if (err) {
+                    console.log(err);
+                    resp.send('Something went wrong!');
+                } else {
+                    resp.send('Added');
+                }
             });
         }
     });
 
     //Remove a todo with id (in-built) passed as param
-    app.delete('/api/todo/:id', function (req, resp) {
+    app.delete('/api/todos/:id', function (req, resp) {
 
         Todos.findByIdAndRemove(req.params.id, function (err, todo) {
             if (err) throw err;
@@ -146,4 +139,16 @@ module.exports = function (app) {
         });
     });
 
+    //Fetch all todos configured with username passed as param
+    app.get('/api/todos/username/:uname', function (req, resp) {
+
+        Todos.find({
+            username: req.params.uname
+        }, function (err, todo) {
+            if (err)
+                throw err;
+
+            resp.send(todo);
+        });
+    });
 };

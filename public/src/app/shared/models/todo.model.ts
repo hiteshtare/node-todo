@@ -4,4 +4,9 @@ export class Todo {
     name: string;
     isDone: boolean;
     hasAttachment: boolean;
+    files: [{
+        name: string,
+        fileType: string,
+        size: number
+    }]
 }

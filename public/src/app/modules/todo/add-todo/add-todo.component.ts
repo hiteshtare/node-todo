@@ -3,7 +3,7 @@ import { TodoService } from './../../../shared/services/todo.service';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CustomToastService } from '../../../shared/services/custom-toast.service';
-import { FileUploader } from 'ng2-file-upload';
+import { FileUploader, FileItem } from 'ng2-file-upload';
 
 @Component({
   selector: 'app-add-todo',
@@ -13,8 +13,6 @@ import { FileUploader } from 'ng2-file-upload';
 })
 export class AddTodoComponent {
 
-  public uploader: FileUploader = new FileUploader({ url: 'http://localhost:5000/api/upload' });
-
   addTodoForm: FormGroup;
   newTodo: Todo;
 
@@ -23,12 +21,26 @@ export class AddTodoComponent {
     this.createForm();
   }
 
+  public uploader: FileUploader = new FileUploader({ url: this.todoService.todosUploadUrl });
+
   createForm() {
     this.addTodoForm = this.formBuilder.group({ 'name': ['', Validators.compose([Validators.required])], 'isDone': ['', Validators.compose([Validators.required])] });
   }
 
   onAdd(todo: Todo) {
-    console.log(this.uploader);
+    todo.hasAttachment = false;
+
+    let fileQueue: FileItem[] = this.uploader.queue;
+    fileQueue.forEach(fileItem => {
+      if (fileItem.isUploaded) {
+        todo.hasAttachment = true;
+
+        if (!todo.files)
+          todo.files = [{ name: fileItem.file.name, fileType: fileItem.file.type, size: fileItem.file.size }];
+        else
+          todo.files.push({ name: fileItem.file.name, fileType: fileItem.file.type, size: fileItem.file.size });
+      }
+    });
 
     this.todoService.addOrUpdateTodo(todo).then((result) => {
       if (result._body === "Added") {

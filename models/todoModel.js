@@ -12,7 +12,12 @@ var todoSchema = new Schema({
     },
     updated_at: {
         type: Date
-    }
+    },
+    files: [{
+        name: String,
+        fileType: String,
+        size: Number
+    }]
 });
 
 var todos = mongoose.model('Todos', todoSchema);

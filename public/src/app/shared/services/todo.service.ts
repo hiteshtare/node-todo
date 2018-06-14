@@ -15,6 +15,7 @@ export class TodoService {
   options: RequestOptions;
 
   private todosApiUrl = 'http://localhost:5000/api';
+  public todosUploadUrl = 'http://localhost:5000/api/todos/upload';
 
   constructor(private http: Http) {
     this.headers = new Headers({
@@ -26,21 +27,21 @@ export class TodoService {
 
   //Fetch all todos configured in DB
   getTodos(): Promise<Todo[]> {
-    const url = `${this.todosApiUrl}/todo/test`;
+    const url = `${this.todosApiUrl}/todos`;
 
     return this.http.get(url).toPromise().then(response => response.json() as Todo[]);
   }
 
   //Fetch all todos configured with username passed as param
   getTodosByUserName(username: string): Promise<Todo[]> {
-    const url = `${this.todosApiUrl}/todo/username/${username}`;
+    const url = `${this.todosApiUrl}/todos/username/${username}`;
 
     return this.http.get(url).toPromise().then(response => response.json() as Todo[]);
   }
 
   //Fetch a todo with id(in-built) passed as param
   getTodoByInbuiltId(inbuiltId: string): Promise<Todo> {
-    const url = `${this.todosApiUrl}/todo/id/${inbuiltId}`;
+    const url = `${this.todosApiUrl}/todos/id/${inbuiltId}`;
 
     return this.http.get(url).toPromise().then(response => response.json() as Todo);
   }
@@ -49,14 +50,14 @@ export class TodoService {
   addOrUpdateTodo(todo: Todo): Promise<any> {
 
     const body = JSON.stringify(todo);
-    const url = `${this.todosApiUrl}/todo/`;
+    const url = `${this.todosApiUrl}/todos/`;
 
     return this.http.post(url, body, { headers: this.headers }).toPromise().then((response) => { console.log(response); return response; });
   }
 
   //Remove a todo with id (in-built) passed as param
   removeTodo(inbuiltId: string): Promise<any> {
-    const url = `${this.todosApiUrl}/todo/${inbuiltId}`;
+    const url = `${this.todosApiUrl}/todos/${inbuiltId}`;
 
     return this.http.delete(url).toPromise().then((response) => { console.log(response); return response; });
   }
