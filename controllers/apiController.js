@@ -2,7 +2,7 @@ var Todos = require('../models/todoModel');
 var bodyParser = require('body-parser');
 var multer = require('multer');
 var path = require('path');
-var appDir = path.dirname(require.main.filename); //get absolute path
+var appDir = path.dirname(require.main.filename); //gets absolute path
 
 module.exports = function (app) {
 
@@ -13,10 +13,10 @@ module.exports = function (app) {
 
     var storage = multer.diskStorage({ //multers disk storage settings
         destination: function (req, file, cb) {
-            cb(null, 'uploads/')
+            cb(null, 'uploads/') //name of the upload directory
         },
         filename: function (req, file, cb) {
-            var datetimestamp = Date.now();
+            var datetimestamp = Date.now(); //upload file name calculation
             cb(null, file.fieldname + '-' + datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length - 1]);
         }
     });
@@ -58,7 +58,6 @@ module.exports = function (app) {
                 });
                 return;
             }
-            //resp.send(todos);
             res.send({
                 success: true,
                 status: 0,
@@ -67,20 +66,21 @@ module.exports = function (app) {
         });
     });
 
-    /** API path that will fetch the files using name*/
+    //Fetch the file using name
     app.get('/api/todos/upload/:name', (req, res) => {
         res.sendFile(`${appDir}/uploads/${req.params.name}`);
     });
 
-    //Fetch all todos configured in DB
+    //Fetch all todos configured
     app.get('/api/todos/', function (req, resp) {
 
+        //Find all records
         Todos.find({}, function (err, todos) {
             if (err)
                 throw err;
 
             resp.send(todos);
-        }).sort({
+        }).sort({ //sorting the fields
             updated_at: -1,
             created_at: -1
         });
@@ -89,6 +89,7 @@ module.exports = function (app) {
     //Fetch a todo with id(in-built) passed as param
     app.get('/api/todos/id/:id', function (req, resp) {
 
+        //Find records by id(in-built)
         Todos.findById({
             _id: req.params.id
         }, function (err, todo) {
@@ -102,26 +103,33 @@ module.exports = function (app) {
     //Create or Update a todo with id (in-built) passed from body
     app.post('/api/todos', function (req, resp) {
 
+        //if body has  id(in-built)
         if (req.body._id) {
+
+            //Find record by id(in-built) and update
             Todos.findByIdAndUpdate(req.body._id, {
                 name: req.body.name,
                 isDone: req.body.isDone,
                 hasAttachment: req.body.hasAttachment,
                 updated_at: Date.now()
             }, function (err) {
-                if (err) throw err;
-
-                resp.send('Updated');
+                if (err) {
+                    console.log(err);
+                    resp.send('Something went wrong!');
+                } else {
+                    resp.send('Updated');
+                }
             })
         } else {
 
+            //Create new record
             var newTodo = Todos({
                 username: 'web',
                 name: req.body.name,
                 isDone: req.body.isDone,
                 hasAttachment: req.body.hasAttachment,
                 created_at: Date.now(),
-                files: req.body.files // storing attachments
+                files: req.body.files // storing attachment details
             });
 
             newTodo.save(function (err) {
@@ -138,6 +146,7 @@ module.exports = function (app) {
     //Remove a todo with id (in-built) passed as param
     app.delete('/api/todos/:id', function (req, resp) {
 
+        //Find record by id(in-built) and remove
         Todos.findByIdAndRemove(req.params.id, function (err, todo) {
             if (err) throw err;
 
@@ -148,6 +157,7 @@ module.exports = function (app) {
     //Fetch all todos configured with username passed as param
     app.get('/api/todos/username/:uname', function (req, resp) {
 
+        //Find all records using username
         Todos.find({
             username: req.params.uname
         }, function (err, todo) {

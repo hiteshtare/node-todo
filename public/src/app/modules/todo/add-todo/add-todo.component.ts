@@ -1,6 +1,6 @@
 import { Todo } from './../../../shared/models/todo.model';
 import { TodoService } from './../../../shared/services/todo.service';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CustomToastService } from '../../../shared/services/custom-toast.service';
 import { FileUploader, FileItem, ParsedResponseHeaders } from 'ng2-file-upload';
@@ -17,6 +17,8 @@ export class AddTodoComponent implements OnInit {
   newTodo: Todo;
   public uploader: FileUploader
   uploadedResp = [];
+  @ViewChild('inputFileUpload')
+  inputFileUpload: any;
 
   constructor(private formBuilder: FormBuilder, private todoService: TodoService,
     public customToastService: CustomToastService) {
@@ -78,5 +80,7 @@ export class AddTodoComponent implements OnInit {
   clearFields() {
     this.addTodoForm.reset();
     this.uploadedResp = [];
+    this.uploader.clearQueue();
+    this.inputFileUpload.nativeElement.value = "";
   }
 }
