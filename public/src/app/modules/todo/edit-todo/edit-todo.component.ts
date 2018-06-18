@@ -61,4 +61,16 @@ export class EditTodoComponent implements OnInit {
       }
     });
   }
+
+
+  onRemoveAttachment(file) {
+    let inbuiltId = this.existingTodo._id;
+    let fileName = file.savedName;
+
+    this.todoService.removeTodoAttachment(inbuiltId, fileName).then((result) => {
+      if (result._body === "Deleted") {
+        this.customToastService.toastMessage("Attachment removed!", "");
+      }
+    });
+  }
 }

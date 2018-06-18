@@ -23,7 +23,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { MatPaginatorModule } from '@angular/material';
+import { MatPaginatorModule, MatListModule } from '@angular/material';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
@@ -55,7 +55,8 @@ import { FileSelectDirective } from 'ng2-file-upload';
     MatGridListModule,
     MatPaginatorModule,
     MatSnackBarModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatListModule
   ],
   providers: [appRoutingProviders, TodoService, CustomToastService, { provide: ErrorHandler, useClass: CustomErrorHandlerService }],
   bootstrap: [AppComponent]

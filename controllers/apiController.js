@@ -154,6 +154,69 @@ module.exports = function (app) {
         });
     });
 
+    //Remove a todo with id (in-built) passed as param
+    app.delete('/api/todos/attachments/:id/:fileName', function (req, resp) {
+
+        // Todos.collection.find({
+        //     files: {
+        //         $elemMatch: {
+        //             'savedName': req.params.fileName
+        //         }
+        //     }
+        // });
+
+        // Todos.collection.update({
+        //         _id: req.params.id
+        //     }, {
+        //         $pull: {
+        //             'files': {
+        //                 savedName: req.body.fileName
+        //             }
+        //         }
+        //     },
+        //     function (err, todo) {
+
+        //         if (err) {
+        //             return done(err);
+        //         }
+
+        //     });
+
+        // Todos.findOne({
+        //         'files': {
+        //             $elemMatch: {
+        //                 savedName: req.body.fileName
+        //             }
+        //         }
+        //     },
+        //     function (err, todo) {
+
+        //         if (err) {
+        //             return done(err);
+        //         }
+
+        //     });
+
+        //Find records by id(in-built)
+        // Todos.findById({
+        //     _id: req.params.id
+        // }, function (err, todo) {
+        //     if (err)
+        //         throw err;
+
+        //     //Find record by id(in-built) and remove
+        //     todo.files.findOne({
+        //             'savedName': req.params.fileName
+        //         },
+        //         function (err, todo) {
+        //             if (err) throw err;
+
+        //             resp.send('Deleted');
+        //         });
+        // });
+
+    });
+
     //Fetch all todos configured with username passed as param
     app.get('/api/todos/username/:uname', function (req, resp) {
 

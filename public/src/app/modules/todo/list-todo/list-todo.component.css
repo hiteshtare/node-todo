@@ -10,13 +10,12 @@
   max-height: 500px;
 }
 
-
 .docs-primary-header h1 {
-    font-size: 30px;
-    font-weight: 300;
-    margin: 0;
-    padding: 28px 8px;
-    font-size: 20px;
+  font-size: 30px;
+  font-weight: 300;
+  margin: 0;
+  padding: 28px 8px;
+  font-size: 20px;
 }
 
 .example-container {
@@ -24,7 +23,7 @@
   flex-direction: column;
 }
 
-.example-container > * {
+.example-container>* {
   width: 100%;
 }
 
@@ -32,7 +31,7 @@
   margin-bottom: 20px;
 }
 
-.example-container form > * {
+.example-container form>* {
   margin: 5px 0;
 }
 
@@ -40,28 +39,28 @@
   margin: 0 5px;
 }
 
-.mat-form-field{
-    width: 85%;
+.mat-form-field {
+  width: 85%;
 }
 
 mat-grid-tile {
   /* background: lightblue; */
 }
 
-.form-buttons{
-    text-align: center;
+.form-buttons {
+  text-align: center;
 }
 
-.mat-card{
-    background: rgba(0,0,0,.02);
+.mat-card {
+  background: rgba(0, 0, 0, .02);
 }
 
-.mat-toolbar{
-    
-    background: rgba(0,0,0,.04);
+.mat-toolbar {
+  background: rgba(0, 0, 0, .04);
 }
 
 /* Structure */
+
 .example-container {
   display: flex;
   flex-direction: column;
@@ -78,6 +77,10 @@ mat-grid-tile {
   max-height: 500px;
 }
 
-.mat-grid-tile .mat-figure{
-    display: block !important;
+.mat-grid-tile .mat-figure {
+  display: block !important;
+}
+
+.mat-card-image {
+  margin: 5px 0px 0px 5px !important;
 }

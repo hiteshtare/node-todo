@@ -27,6 +27,19 @@
             </mat-radio-group>
           </div>
           <br>
+          <div *ngIf="existingTodo.files">
+            <!-- <label>
+              <mat-icon>attach_file</mat-icon>Attachment: </label> -->
+            <mat-list>
+              <mat-list-item *ngFor="let file of existingTodo.files">
+                <img mat-card-image src="http://localhost:5000/api/todos/upload/{{file.savedName}}" [alt]="file.savedName">
+                <button class="btn-delete" mat-icon-button (click)="onRemoveAttachment(file)">
+                  <mat-icon aria-label="Delete attachment">delete</mat-icon>
+                </button>
+              </mat-list-item>
+            </mat-list>
+          </div>
+          <br>
           <div class="form-buttons">
             <mat-grid-list cols="4">
               <mat-grid-tile [colspan]="2">

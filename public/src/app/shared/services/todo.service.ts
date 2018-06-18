@@ -62,6 +62,13 @@ export class TodoService {
     return this.http.delete(url).toPromise().then((response) => { console.log(response); return response; });
   }
 
+  //Remove an attachment with id (in-built) and filename passed as param
+  removeTodoAttachment(inbuiltId: string, fileName: string): Promise<any> {
+    const url = `${this.todosApiUrl}/todos/attachments/${inbuiltId}/${fileName}`;
+
+    return this.http.delete(url).toPromise().then((response) => { console.log(response); return response; });
+  }
+
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error);
     return Promise.reject(error.message || error);
