@@ -24,16 +24,20 @@ export class EditTodoComponent implements OnInit {
   ngOnInit() {
     this.route.params.map(params => params['id']).subscribe((inbuiltId) => {
       if (inbuiltId) {
-        this.todoService.getTodoByInbuiltId(inbuiltId).then((todo: Todo) => {
-          if (todo)
-            this.existingTodo = todo;
-          else
-            alert("Empty Object!");
-        });
+        this.loadTodoById(inbuiltId);
       }
       else {
         alert("Empty id!");
       }
+    });
+  }
+
+  loadTodoById(inbuiltId: string) {
+    this.todoService.getTodoByInbuiltId(inbuiltId).then((todo: Todo) => {
+      if (todo)
+        this.existingTodo = todo;
+      else
+        alert("Empty Object!");
     });
   }
 
@@ -70,6 +74,7 @@ export class EditTodoComponent implements OnInit {
     this.todoService.removeTodoAttachment(inbuiltId, fileName).then((result) => {
       if (result._body === "Deleted") {
         this.customToastService.toastMessage("Attachment removed!", "");
+        this.loadTodoById(inbuiltId);
       }
     });
   }
