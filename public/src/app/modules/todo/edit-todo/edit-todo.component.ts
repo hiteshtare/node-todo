@@ -47,7 +47,6 @@ export class EditTodoComponent implements OnInit {
   }
 
   onUpdate(formValue) {
-
     this.todoService.addOrUpdateTodo(this.existingTodo).then((result) => {
       if (result._body === "Updated") {
         this.customToastService.toastMessage("Todo updated in the list.", "");

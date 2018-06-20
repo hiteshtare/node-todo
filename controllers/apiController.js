@@ -61,7 +61,7 @@ module.exports = function (app) {
             res.send({
                 success: true,
                 status: 0,
-                payload: req.file
+                payload: req.file //Success object with Db fields
             });
         });
     });
@@ -73,17 +73,47 @@ module.exports = function (app) {
 
     //Fetch all todos configured
     app.get('/api/todos/', function (req, resp) {
+        //Fetch records using Aggregate function
+        Todos.aggregate([{
 
-        //Find all records
-        Todos.find({}, function (err, todos) {
-            if (err)
-                throw err;
+                $addFields: { //To add new field on the fly
+                    Done: { //New field name
+                        $cond: { //Condition
+                            if: {
+                                $eq: ["$isDone", true] //Equality operator
+                            },
+                            then: "Yes",
+                            else: "No"
+                        }
+                    },
+                    Attachment: { //New field name
+                        $cond: {
+                            if: {
+                                $eq: ["$hasAttachment", true]
+                            },
+                            then: "Yes",
+                            else: "No"
+                        }
+                    }
+                }
+            }]).allowDiskUse(true)
+            .exec(function (err, todos) {
+                if (err)
+                    throw err;
 
-            resp.send(todos);
-        }).sort({ //sorting the fields
-            updated_at: -1,
-            created_at: -1
-        });
+                resp.send(todos);
+            })
+
+        // //Find all records
+        // Todos.find({}, function (err, todos) {
+        //     if (err)
+        //         throw err;
+
+        //     resp.send(todos);
+        // }).sort({ //sorting the fields
+        //     updated_at: -1,
+        //     created_at: -1
+        // });
     });
 
     //Fetch a todo with id(in-built) passed as param
@@ -103,7 +133,7 @@ module.exports = function (app) {
     //Create or Update a todo with id (in-built) passed from body
     app.post('/api/todos', function (req, resp) {
 
-        //if body has  id(in-built)
+        //if body has id(in-built) perform Update operation
         if (req.body._id) {
 
             //Find record by id(in-built) and update
@@ -113,14 +143,12 @@ module.exports = function (app) {
                 hasAttachment: req.body.hasAttachment,
                 updated_at: Date.now()
             }, function (err) {
-                if (err) {
-                    console.log(err);
-                    resp.send('Something went wrong!');
-                } else {
-                    resp.send('Updated');
-                }
+                if (err)
+                    throw err;
+
+                resp.send('Updated');
             })
-        } else {
+        } else { //Perform Insert operation
 
             //Create new record
             var newTodo = Todos({
@@ -133,12 +161,10 @@ module.exports = function (app) {
             });
 
             newTodo.save(function (err) {
-                if (err) {
-                    console.log(err);
-                    resp.send('Something went wrong!');
-                } else {
-                    resp.send('Added');
-                }
+                if (err)
+                    throw err;
+
+                resp.send('Added');
             });
         }
     });
@@ -154,34 +180,30 @@ module.exports = function (app) {
         });
     });
 
-    //Remove a todo with id (in-built) passed as param
+    //Remove an attachment with id (in-built) and fileName passed as param
     app.delete('/api/todos/attachments/:id/:fileName', function (req, resp) {
 
-        //Find record by id(in-built) and then remove records from files array with savedName
+        //Update records by id(in-built) 
         Todos.update({
-                _id: req.params.id
+                _id: req.params.id // id(in-built) first filter
             }, {
-                $pull: {
-                    files: {
+                $pull: { //Remove operator
+                    files: { //Array from which records that meet the following condtion will be poopped
                         savedName: req.params.fileName
                     }
                 }
             },
             function (err, todo) {
-
-                if (err) {
-                    return done(err);
-                }
+                if (err)
+                    throw err;
 
                 resp.send('Deleted');
-
             });
     });
 
     //Fetch all todos configured with username passed as param
     app.get('/api/todos/username/:uname', function (req, resp) {
-
-        //Find all records using username
+        //Find all records with username
         Todos.find({
             username: req.params.uname
         }, function (err, todo) {

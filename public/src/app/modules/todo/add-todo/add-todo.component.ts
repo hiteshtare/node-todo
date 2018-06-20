@@ -26,6 +26,7 @@ export class AddTodoComponent implements OnInit {
   }
 
   ngOnInit() {
+    //Initialize the uploader plugin
     this.uploader = new FileUploader({ url: this.todoService.todosUploadUrl });
     this.uploader.onErrorItem = (item, response, status, headers) => this.onErrorItem(item, response, status, headers);
     this.uploader.onSuccessItem = (item, response, status, headers) => this.onSuccessItem(item, response, status, headers);
@@ -45,13 +46,12 @@ export class AddTodoComponent implements OnInit {
   }
 
   onAdd(todo: Todo) {
-    if (this.uploadedResp.length > 0) {
+    if (this.uploadedResp.length > 0) {//Check for attachment uploaded
       todo.hasAttachment = true;
 
       this.uploadedResp.forEach(resp => {
         if (resp.success) {
           let payload = resp.payload;
-
           todo.hasAttachment = true;
 
           if (!todo.files)
