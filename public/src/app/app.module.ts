@@ -10,7 +10,7 @@ import { TodoService } from './shared/services/todo.service';
 import { appRoutingProviders, routing } from './shared/routes/app.routing';
 import { AddTodoComponent } from './modules/todo/add-todo/add-todo.component';
 import { ListTodoComponent } from './modules/todo/list-todo/list-todo.component';
-import { EditTodoComponent } from './modules/todo/edit-todo/edit-todo.component';
+import { EditTodoComponent, DialogDeleteAttachment, DialogDeleteTodo } from './modules/todo/edit-todo/edit-todo.component';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -23,7 +23,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
-import { MatPaginatorModule, MatListModule } from '@angular/material';
+import { MatPaginatorModule, MatListModule, MatDialogModule } from '@angular/material';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
@@ -35,7 +35,8 @@ import { FileSelectDirective } from 'ng2-file-upload';
     AddTodoComponent,
     ListTodoComponent,
     EditTodoComponent,
-    FileSelectDirective
+    FileSelectDirective,
+    DialogDeleteAttachment, DialogDeleteTodo
   ],
   imports: [
     routing,
@@ -56,8 +57,10 @@ import { FileSelectDirective } from 'ng2-file-upload';
     MatPaginatorModule,
     MatSnackBarModule,
     MatProgressBarModule,
-    MatListModule
+    MatListModule,
+    MatDialogModule
   ],
+  entryComponents: [DialogDeleteAttachment, DialogDeleteTodo],
   providers: [appRoutingProviders, TodoService, CustomToastService, { provide: ErrorHandler, useClass: CustomErrorHandlerService }],
   bootstrap: [AppComponent]
 })

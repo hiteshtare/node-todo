@@ -54,3 +54,7 @@ mat-grid-tile {
 .btn-delete {
   padding-left: 50px;
 }
+
+.mat-dialog-content {
+  padding: 0 !important;
+}

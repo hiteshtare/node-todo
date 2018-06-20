@@ -33,7 +33,7 @@
             <mat-list>
               <mat-list-item *ngFor="let file of existingTodo.files">
                 <img mat-card-image src="http://localhost:5000/api/todos/upload/{{file.savedName}}" [alt]="file.savedName">
-                <button class="btn-delete" mat-icon-button (click)="onRemoveAttachment(file)">
+                <button class="btn-delete" mat-icon-button (click)="openDeleteAttachmentDialog(file)">
                   <mat-icon aria-label="Delete attachment">delete</mat-icon>
                 </button>
               </mat-list-item>
@@ -46,7 +46,7 @@
                 <button color="accent" mat-raised-button type="button" [disabled]="!editTodoForm.valid" (click)="onUpdate(editTodoForm.value)">Update</button>
               </mat-grid-tile>
               <mat-grid-tile [colspan]="2">
-                <button color="warn" type="button" mat-raised-button (click)="onRemove(editTodoForm.value)">Remove</button>
+                <button color="warn" type="button" mat-raised-button (click)="openDeleteTodoDialog()">Remove</button>
               </mat-grid-tile>
             </mat-grid-list>
           </div>

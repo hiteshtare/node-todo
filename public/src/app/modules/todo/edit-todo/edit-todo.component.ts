@@ -1,9 +1,10 @@
 import { CustomToastService } from './../../../shared/services/custom-toast.service';
 import { Todo } from './../../../shared/models/todo.model';
 import { TodoService } from './../../../shared/services/todo.service';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, Inject } from '@angular/core';
 import { FormControl, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-edit-todo',
@@ -17,7 +18,7 @@ export class EditTodoComponent implements OnInit {
   existingTodo: Todo = new Todo();
 
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private todoService: TodoService,
-    public customToastService: CustomToastService) {
+    public customToastService: CustomToastService, public dialog: MatDialog) {
     this.createForm();
   }
 
@@ -55,7 +56,7 @@ export class EditTodoComponent implements OnInit {
     });
   }
 
-  onRemove(formValue) {
+  onRemove() {
     let inbuiltId = this.existingTodo._id;
 
     this.todoService.removeTodo(inbuiltId).then((result) => {
@@ -66,16 +67,82 @@ export class EditTodoComponent implements OnInit {
     });
   }
 
+  openDeleteAttachmentDialog(file): void {
+    let dialogDeleteAttachmentRef = this.dialog.open(DialogDeleteAttachment, {
+      width: '250px',
+      data: {
+        file: file,
+        inbuiltId: this.existingTodo._id
+      }
+    });
 
-  onRemoveAttachment(file) {
-    let inbuiltId = this.existingTodo._id;
-    let fileName = file.savedName;
+    dialogDeleteAttachmentRef.afterClosed().subscribe(result => {
+      this.loadTodoById(this.existingTodo._id);
+    });
+  }
 
-    this.todoService.removeTodoAttachment(inbuiltId, fileName).then((result) => {
-      if (result._body === "Deleted") {
-        this.customToastService.toastMessage("Attachment removed!", "");
-        this.loadTodoById(inbuiltId);
+  openDeleteTodoDialog(formValue): void {
+    let dialogDeleteTodoRef = this.dialog.open(DialogDeleteTodo, {
+      width: '250px',
+      data: {
+        inbuiltId: this.existingTodo._id
       }
     });
   }
+}
+
+@Component({
+  selector: 'dialog-delete-attachement',
+  templateUrl: 'dialog-delete-attachement.html',
+})
+export class DialogDeleteAttachment {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogDeleteAttachment>,
+    @Inject(MAT_DIALOG_DATA) public data: any, private todoService: TodoService, public customToastService: CustomToastService) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  onYesClick(): void {
+    let inbuiltId = this.data.inbuiltId;
+    let fileName = this.data.file.savedName;
+
+    this.todoService.removeTodoAttachment(inbuiltId, fileName).then((result) => {
+      if (result._body === "Deleted") {
+        this.dialogRef.close();
+        this.customToastService.toastMessage("Attachment removed!", "");
+      }
+    });
+  }
+
+}
+
+@Component({
+  selector: 'dialog-delete-todo',
+  templateUrl: 'dialog-delete-todo.html',
+})
+export class DialogDeleteTodo {
+
+  constructor(
+    public dialogRef: MatDialogRef<DialogDeleteTodo>,
+    @Inject(MAT_DIALOG_DATA) public data: any, private todoService: TodoService, public customToastService: CustomToastService, private router: Router) { }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
+  onYesClick(): void {
+    let inbuiltId = this.data.inbuiltId;
+
+    this.todoService.removeTodo(inbuiltId).then((result) => {
+      if (result._body === "Deleted") {
+        this.dialogRef.close();
+        this.customToastService.toastMessage("Todo removed!", "");
+        this.router.navigate(['/list']);
+      }
+    });
+  }
+
 }
