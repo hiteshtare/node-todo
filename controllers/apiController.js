@@ -94,6 +94,9 @@ module.exports = function (app) {
                             then: "Yes",
                             else: "No"
                         }
+                    },
+                    Attach_Count: { //New field name
+                        $size: ["$files"] //Array Size calc operator
                     }
                 }
             }]).allowDiskUse(true)

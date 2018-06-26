@@ -29,7 +29,12 @@
           <br>
           <div>
             <label>Upload: </label>
-            <input #inputFileUpload type="file" class="form-control" name="single" ng2FileSelect [uploader]="uploader" />
+            <!-- <button mat-mini-fab type="button">
+              <label for="fileToUpload">
+                <mat-icon>add</mat-icon>
+              </label>
+            </button> -->
+            <input #inputFileUpload type="file" class="form-control" name="fileToUpload" ng2FileSelect [uploader]="uploader" />
           </div>
           <br>
           <div class="col-md-8">

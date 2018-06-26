@@ -13,7 +13,7 @@ import { MatTableDataSource, MatSort, MatPaginator, Sort } from '@angular/materi
 export class ListTodoComponent implements OnInit {
 
   todos;
-  displayedColumns = ['avatar', 'name', 'Attachment', 'Done', "actions"];
+  displayedColumns = ['avatar', 'name', 'Attachment','Attach_Count', 'Done', "actions"];
 
   @ViewChild(MatSort) sort: MatSort;
 

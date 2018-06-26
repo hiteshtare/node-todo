@@ -32,9 +32,9 @@
               <mat-icon>attach_file</mat-icon>Attachment: </label> -->
             <mat-list>
               <mat-list-item *ngFor="let file of existingTodo.files">
-                <img mat-card-image src="http://localhost:5000/api/todos/upload/{{file.savedName}}" [alt]="file.savedName">
+                <img mat-card-image src="http://localhost:5000/api/todos/upload/{{file.savedName}}" [alt]="file.savedName" matTooltip="{{file.name}}">
                 <button class="btn-delete" mat-icon-button (click)="openDeleteAttachmentDialog(file)">
-                  <mat-icon aria-label="Delete attachment">delete</mat-icon>
+                  <mat-icon matTooltip="Delete attachment">delete</mat-icon>
                 </button>
               </mat-list-item>
             </mat-list>

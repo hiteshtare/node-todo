@@ -23,7 +23,8 @@
             <mat-header-cell *matHeaderCellDef> Avatar </mat-header-cell>
             <mat-cell *matCellDef="let element">
               <ng-container *ngIf="element.files.length">
-                <img mat-card-image src="http://localhost:5000/api/todos/upload/{{element.files[0].savedName}}" [alt]="element.files[0].savedName">
+                <img mat-card-image matTooltip="{{element.files[0].name}}" src="http://localhost:5000/api/todos/upload/{{element.files[0].savedName}}"
+                  [alt]="element.files[0].savedName">
               </ng-container>
               <ng-container *ngIf="!element.files.length">
                 No avatar uploaded
@@ -35,25 +36,35 @@
           </ng-container>
 
           <ng-container matColumnDef="name">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Name</mat-header-cell>
             <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
           </ng-container>
 
           <!-- Has Attachment Column -->
           <ng-container matColumnDef="Attachment">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Has Attachment </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Has Attachment</mat-header-cell>
             <mat-cell *matCellDef="let element"> {{element.Attachment}} </mat-cell>
           </ng-container>
 
+          <ng-container matColumnDef="Attach_Count">
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Count</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.Attach_Count}} </mat-cell>
+          </ng-container>
+
           <ng-container matColumnDef="Done">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Done </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header>Done</mat-header-cell>
             <mat-cell *matCellDef="let element"> {{element.Done}} </mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="actions">
-            <mat-header-cell *matHeaderCellDef> Actions </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef> Actions</mat-header-cell>
             <mat-cell *matCellDef="let element">
-              <button color="accent" mat-raised-button routerLink="/edit/{{element._id}}">Edit</button>
+
+              <button mat-icon-button routerLink="/edit/{{element._id}}">
+                <mat-icon matTooltip="Edit todo">edit</mat-icon>
+              </button>
+
+              <!-- <button color="accent" mat-raised-button routerLink="/edit/{{element._id}}">Edit</button> -->
             </mat-cell>
           </ng-container>
 
