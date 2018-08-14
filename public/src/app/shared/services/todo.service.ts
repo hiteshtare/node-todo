@@ -68,10 +68,4 @@ export class TodoService {
 
     return this.http.delete(url).toPromise().then((response) => { console.log(response); return response; });
   }
-
-  private handleError(error: any): Promise<any> {
-    console.error('An error occurred', error);
-    return Promise.reject(error.message || error);
-  }
-
 }

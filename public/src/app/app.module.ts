@@ -1,5 +1,4 @@
 import { CustomToastService } from './shared/services/custom-toast.service';
-import { CustomErrorHandlerService } from './shared/services/custom-error-handler.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpModule } from '@angular/http';
@@ -28,6 +27,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { FileSelectDirective } from 'ng2-file-upload';
+import { ErrorsModule } from './shared/error/error.module';
+import { errorRouting } from './shared/error/errors-routing/errors-routing';
 
 @NgModule({
   declarations: [
@@ -60,10 +61,12 @@ import { FileSelectDirective } from 'ng2-file-upload';
     MatListModule,
     MatDialogModule,
     MatSortModule,
-    MatTooltipModule
+    MatTooltipModule,
+    ErrorsModule, // ERROR HANDLING
+    errorRouting// ERROR HANDLING
   ],
   entryComponents: [DialogDeleteAttachment, DialogDeleteTodo],
-  providers: [appRoutingProviders, TodoService, CustomToastService, { provide: ErrorHandler, useClass: CustomErrorHandlerService }],
+  providers: [appRoutingProviders, TodoService, CustomToastService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
