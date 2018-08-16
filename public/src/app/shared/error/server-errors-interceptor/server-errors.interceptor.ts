@@ -23,7 +23,7 @@ export class ServerErrorsInterceptor implements HttpInterceptor {
   ) { }
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    return next.handle(request).retry(3);
+    return next.handle(request).retry(1);
 
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
+import { GlobalService } from '../../services/global.service';
 
 @Component({
   selector: 'cm-error',
@@ -11,8 +12,8 @@ export class ErrorsComponent implements OnInit {
   routeParams;
   data;
 
-  constructor(private activatedRoute: ActivatedRoute) {
-    //this._globalService.showHeaderAndFooter = false;
+  constructor(private activatedRoute: ActivatedRoute, private _globalService: GlobalService) {
+    this._globalService.showHeaderAndFooter = false;
   }
 
   ngOnInit() {

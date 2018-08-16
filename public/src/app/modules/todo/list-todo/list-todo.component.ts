@@ -2,6 +2,7 @@ import { TodoService } from './../../../shared/services/todo.service';
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Todo } from '../../../shared/models/todo.model';
 import { MatTableDataSource, MatSort, MatPaginator, Sort } from '@angular/material';
+import { GlobalService } from '../../../shared/services/global.service';
 
 @Component({
   selector: 'app-list-todo',
@@ -13,11 +14,12 @@ import { MatTableDataSource, MatSort, MatPaginator, Sort } from '@angular/materi
 export class ListTodoComponent implements OnInit {
 
   todos;
-  displayedColumns = ['avatar', 'name', 'Attachment','Attach_Count', 'Done', "actions"];
+  displayedColumns = ['avatar', 'name', 'Attachment', 'Attach_Count', 'Done', "actions"];
 
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private todoService: TodoService) {
+  constructor(private todoService: TodoService, private _globalService: GlobalService) {
+    this._globalService.showHeaderAndFooter = false;
   }
 
   ngOnInit() {

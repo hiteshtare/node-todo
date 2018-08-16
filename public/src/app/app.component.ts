@@ -1,3 +1,4 @@
+import { GlobalService } from './shared/services/global.service';
 import { Component } from '@angular/core';
 import { TodoService } from './shared/services/todo.service';
 import { Todo } from './shared/models/todo.model';
@@ -11,7 +12,7 @@ export class AppComponent {
   title = 'Todo - MEAN App';
   todos: Todo[];
 
-  constructor(private todoService: TodoService) {
+  constructor(private todoService: TodoService, private _globalService: GlobalService) {
   }
 
   ngOnInit() {

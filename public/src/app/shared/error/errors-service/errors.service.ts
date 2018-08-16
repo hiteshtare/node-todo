@@ -40,7 +40,7 @@ export class ErrorsService {
   addContextInfo(error) {
     // You can include context details here (usually coming from other services: UserService...)
     const name = error.name || null;
-    const appId = 'CM-2.0 App';
+    const appId = 'Node - Todo App';
     //const user = `${this._globalService.actor.first_name} ${this._globalService.actor.last_name}`;
     const user = `Hitesh Tare`
     const time = new Date().getTime();

@@ -1,3 +1,4 @@
+import { GlobalService } from './shared/services/global.service';
 import { CustomToastService } from './shared/services/custom-toast.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, ErrorHandler } from '@angular/core';
@@ -66,7 +67,7 @@ import { errorRouting } from './shared/error/errors-routing/errors-routing';
     errorRouting// ERROR HANDLING
   ],
   entryComponents: [DialogDeleteAttachment, DialogDeleteTodo],
-  providers: [appRoutingProviders, TodoService, CustomToastService],
+  providers: [appRoutingProviders, TodoService, CustomToastService, GlobalService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

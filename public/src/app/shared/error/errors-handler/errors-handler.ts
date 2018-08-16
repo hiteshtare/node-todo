@@ -16,7 +16,6 @@ export class ErrorsHandler implements ErrorHandler {
 
         const errorsService = this.injector.get(ErrorsService);
         const router = this.injector.get(Router);
-        debugger;
 
         if (error instanceof HttpErrorResponse) {
             // Server error happened
@@ -49,6 +48,7 @@ export class ErrorsHandler implements ErrorHandler {
                 // Send the error to the server and then
                 // redirect the user to the page with all the info
 
+                debugger;
                 const errObj = {
                     message: error.message,
                     stack: error.stack
