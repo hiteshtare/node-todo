@@ -14,8 +14,11 @@ export class TodoService {
   headers: Headers;
   options: RequestOptions;
 
-  private todosApiUrl = 'http://localhost:5000/api';
-  public todosUploadUrl = 'http://localhost:5000/api/todos/upload';
+  //Dev url >> 'http://localhost:5000/api'
+  private todosApiUrl = '/api';
+
+  //Dev url >> 'http://localhost:5000/api/todos/upload'
+  public todosUploadUrl = '/api/todos/upload';// 
 
   constructor(private http: Http) {
     this.headers = new Headers({
