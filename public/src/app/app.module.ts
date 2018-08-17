@@ -27,7 +27,7 @@ import { MatPaginatorModule, MatListModule, MatDialogModule, MatSortModule, MatT
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
-import { FileSelectDirective } from 'ng2-file-upload';
+import { FileUploadModule } from 'ng2-file-upload';
 import { ErrorsModule } from './shared/error/error.module';
 import { errorRouting } from './shared/error/errors-routing/errors-routing';
 
@@ -37,7 +37,6 @@ import { errorRouting } from './shared/error/errors-routing/errors-routing';
     AddTodoComponent,
     ListTodoComponent,
     EditTodoComponent,
-    FileSelectDirective,
     DialogDeleteAttachment, DialogDeleteTodo
   ],
   imports: [
@@ -63,6 +62,7 @@ import { errorRouting } from './shared/error/errors-routing/errors-routing';
     MatDialogModule,
     MatSortModule,
     MatTooltipModule,
+    FileUploadModule,
     ErrorsModule, // ERROR HANDLING
     errorRouting// ERROR HANDLING
   ],

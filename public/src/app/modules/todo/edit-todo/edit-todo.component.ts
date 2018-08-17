@@ -80,7 +80,7 @@ export class EditTodoComponent implements OnInit {
     });
   }
 
-  openDeleteTodoDialog(formValue): void {
+  openDeleteTodoDialog(): void {
     let dialogDeleteTodoRef = this.dialog.open(DialogDeleteTodo, {
       width: '250px',
       data: {

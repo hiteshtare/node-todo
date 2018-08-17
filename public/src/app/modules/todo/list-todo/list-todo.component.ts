@@ -19,7 +19,7 @@ export class ListTodoComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   constructor(private todoService: TodoService, private _globalService: GlobalService) {
-    this._globalService.showHeaderAndFooter = false;
+    this._globalService.showHeaderAndFooter = true;
   }
 
   ngOnInit() {

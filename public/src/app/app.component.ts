@@ -12,7 +12,7 @@ export class AppComponent {
   title = 'Todo - MEAN App';
   todos: Todo[];
 
-  constructor(private todoService: TodoService, private _globalService: GlobalService) {
+  constructor(private todoService: TodoService, public _globalService: GlobalService) {
   }
 
   ngOnInit() {
