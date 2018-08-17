@@ -12,9 +12,9 @@ var setupController = require('./controllers/setupController');
 var apiController = require('./controllers/apiController');
 
 app.use(logger('dev'));
-app.use('/assets', express.static(`${__dirname}/public`));
+app.use('/assets', express.static(`${__dirname}/public/dist`));
 //////////////////////
-app.get('*', (req, res) => {
+app.get('/*', (req, res) => {
   res.sendFile(path.join(`${__dirname}/public` + '/dist/index.html'));
 });
 //////////////////////
