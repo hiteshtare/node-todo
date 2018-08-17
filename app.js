@@ -15,7 +15,7 @@ app.use(logger('dev'));
 app.use('/assets', express.static(`${__dirname}/public`));
 //////////////////////
 app.get('*', (req, res) => {
-  res.sendFile(path.resolve(`${__dirname}/public`, 'index.html'));
+  res.sendFile(path.resolve(__dirname, 'index.html'));
 });
 //////////////////////
 app.set('view-engine', 'ejs');
