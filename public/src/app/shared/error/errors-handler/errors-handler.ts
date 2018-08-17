@@ -47,8 +47,6 @@ export class ErrorsHandler implements ErrorHandler {
                 // Client Error Happend
                 // Send the error to the server and then
                 // redirect the user to the page with all the info
-
-                debugger;
                 const errObj = {
                     message: error.message,
                     stack: error.stack

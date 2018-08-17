@@ -74,3 +74,6 @@ typings/
 
 # Angular Distribution
 # dist/
+
+#Node Image Upload folder
+/uploads
