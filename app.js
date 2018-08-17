@@ -13,11 +13,11 @@ var apiController = require('./controllers/apiController');
 
 app.use(logger('dev'));
 app.use('/assets', express.static(`${__dirname}/public/dist`));
-//////////////////////
-app.get('/*', (req, res) => {
-  res.sendFile(path.join(`${__dirname}/public` + '/dist/index.html'));
-});
-//////////////////////
+// //////////////////////
+// app.get('/*', (req, res) => {
+//   res.sendFile(path.join(`${__dirname}/public` + '/dist/index.html'));
+// });
+// //////////////////////
 app.set('view-engine', 'ejs');
 
 mongoose.connect(config.getDbConnStr()).then(() => {
