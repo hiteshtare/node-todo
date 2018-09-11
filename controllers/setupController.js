@@ -2,7 +2,7 @@ var Todos = require('../models/todoModel');
 
 module.exports = function (app) {
 
-    app.get('/api/setupTodos', function (req, resp) {
+    app.get('/setupTodos', function (req, resp) {
 
         //seed database
         var starterTodos = [{

@@ -1,0 +1,25 @@
+<ng-container *ngIf="_globalService.showHeaderAndFooter">
+  <mat-toolbar color="primary">
+    <mat-toolbar-row>
+      <a class="docs-navbar-hide-small docs-button mat-button ng-star-inserted" mat-button="" tabindex="0" aria-disabled="false"
+        routerLink="/add">
+        <mat-icon>add</mat-icon>
+        <span class="mat-button-wrapper">Add</span>
+        <div class="mat-button-ripple mat-ripple" matripple=""></div>
+        <div class="mat-button-focus-overlay"></div>
+      </a>
+      <a class="docs-navbar-hide-small docs-button mat-button ng-star-inserted" mat-button="" tabindex="0" aria-disabled="false"
+        routerLink="/list">
+        <mat-icon>list</mat-icon>
+        <span class="mat-button-wrapper">List</span>
+        <div class="mat-button-ripple mat-ripple" matripple=""></div>
+        <div class="mat-button-focus-overlay"></div>
+      </a>
+      <span class="example-spacer"></span>
+      <span>{{title}}</span>
+
+    </mat-toolbar-row>
+  </mat-toolbar>
+</ng-container>
+
+<router-outlet></router-outlet>

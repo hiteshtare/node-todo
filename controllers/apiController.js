@@ -47,7 +47,8 @@ module.exports = function (app) {
     });
 
     /** API path that will upload the files */
-    app.post('/api/todos/upload', function (req, res) {
+    app.post('/todos/upload', function (req, res) {
+
         upload(req, res, function (err) {
             console.log(req.file);
             if (err) {
@@ -67,12 +68,12 @@ module.exports = function (app) {
     });
 
     //Fetch the file using name
-    app.get('/api/todos/upload/:name', (req, res) => {
+    app.get('/todos/upload/:name', (req, res) => {
         res.sendFile(`${appDir}/uploads/${req.params.name}`);
     });
 
     //Fetch all todos configured
-    app.get('/api/todos/', function (req, resp) {
+    app.get('/todos/', function (req, resp) {
         //Fetch records using Aggregate function
         Todos.aggregate([{
 
@@ -120,7 +121,7 @@ module.exports = function (app) {
     });
 
     //Fetch a todo with id(in-built) passed as param
-    app.get('/api/todos/id/:id', function (req, resp) {
+    app.get('/todos/id/:id', function (req, resp) {
 
         //Find records by id(in-built)
         Todos.findById({
@@ -134,7 +135,7 @@ module.exports = function (app) {
     });
 
     //Create or Update a todo with id (in-built) passed from body
-    app.post('/api/todos', function (req, resp) {
+    app.post('/todos', function (req, resp) {
 
         //if body has id(in-built) perform Update operation
         if (req.body._id) {
@@ -173,7 +174,7 @@ module.exports = function (app) {
     });
 
     //Remove a todo with id (in-built) passed as param
-    app.delete('/api/todos/:id', function (req, resp) {
+    app.delete('/todos/:id', function (req, resp) {
 
         //Find record by id(in-built) and remove
         Todos.findByIdAndRemove(req.params.id, function (err, todo) {
@@ -184,7 +185,7 @@ module.exports = function (app) {
     });
 
     //Remove an attachment with id (in-built) and fileName passed as param
-    app.delete('/api/todos/attachments/:id/:fileName', function (req, resp) {
+    app.delete('/todos/attachments/:id/:fileName', function (req, resp) {
 
         //Update records by id(in-built) 
         Todos.update({
@@ -205,7 +206,7 @@ module.exports = function (app) {
     });
 
     //Fetch all todos configured with username passed as param
-    app.get('/api/todos/username/:uname', function (req, resp) {
+    app.get('/todos/username/:uname', function (req, resp) {
         //Find all records with username
         Todos.find({
             username: req.params.uname
